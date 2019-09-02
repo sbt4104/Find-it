@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Register Tasks</title>
+{% endblock %}
+
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            {% if user.userprofile.designation != 'member' %}
+            <div class="col-lg-4">
+                <div class="card">
+                    <br><center><div class="card-title">Tasks</div></center>
+                    <div class="card-body">
+                        <form class="mt-1 mb-1 login-input" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="btn login-form__btn submit w-100">Tasks</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if user.userprofile.designation == 'member' %}
+            <div class="col-12">
+            {% else %}
+            <div class="col-sm-8">
+            {% endif %}
+                <div class="card">
+                    <div class="card-body">
+                            <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th>Task Name</th>
+                                                <th>Deadline</th>
+                                                <th>Member  </th>
+                                                <th>Case</th>
+                                                <th>Task Status</th>
+                                                <th>View/Update Details</th>
+                                            </tr>
+                                        </thead>
+                                        {% for task in tasks %}
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ task.task_number }}</td>
+                                                <td>{{ task.deadline }}</td>
+                                                <td>{{ task.task_member }}</td>
+                                                <td>{{ task.task_case }}</td>
+                                                <td>{{ task.task_status }}</td>
+                                                <td style="color:indigo"><a href = "{% url 'task_details' pk=task.pk %}">Click here</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Add Case Info</title>
+{% endblock %}
+
+{% block body %}
+<div class="login-form-bg h-100" style="padding-top: 120px;">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-xl-6">
+                <div class="form-input-content">
+                    <div class="card login-form mb-0">
+                        <div class="card-body pt-5">
+                            <h3 class="text-center">Add Case Info</h3><br>
+                            <h4 class="text-center">Case Name: {{ case.case_number }}</h4>
+                            <form class="mt-5 mb-5 login-input" method="POST">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    <div class="form-group">
+                                        <b>{{ field.label_tag }}</b>
+                                        {{ field }}
+                                    </div>
+                                {% endfor %}
+                                <button class="btn login-form__btn submit w-100">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

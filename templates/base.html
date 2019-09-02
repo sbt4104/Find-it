@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <!-- Favicon icon -->
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'account/images/favicon.png' %}">
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+        <link href="{% static 'account/css/style.css' %}" rel="stylesheet" type = "text/css">
+        <!-- Pignose Calender -->
+        <link href="{% static 'account/plugins/pg-calendar/css/pignose.calendar.min.css' %}" rel="stylesheet">
+        <!-- Chartist -->
+        <link rel="stylesheet" href="{% static 'account/plugins/chartist/css/chartist.min.css' %}">
+        <link rel="stylesheet" href="{% static 'account/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css' %}">
+        <!-- Custom Stylesheet -->
+        <link href="{% static 'account/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet" type = "text/css">
+        <!-- Date picker plugins css -->
+        <link href="{% static 'account/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css' %}" rel="stylesheet" type = "text/css">
+        <link href="{% static 'account/plugins/summernote/dist/summernote.css' %}" rel="stylesheet">
+        <link href="{% static 'account/plugins/tables/css/datatable/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+        {% block head%}
+        <title>base</title>
+        {% endblock %}
+    </head>
+    <body class="h-100">
+
+
+                    <!--**********************************
+                        Nav header start
+                    ***********************************-->
+                    <div class="nav-header">
+                        <div class="brand-logo">
+                            <a href="">
+                                <!--<b class="logo-abbr"><img src="{% static 'account/images/logo.png' %}" alt=""> </b>
+                                <span class="logo-compact"><img src="{% static 'account/images/logo-compact.png' %}" alt=""></span>-->
+                                <span class="brand-title">
+                                    <h3 style="color:aliceblue">MISSING HACKATHON</h3>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!--**********************************
+                        Nav header end
+                    ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">
+                <div class="nk-nav-scroll">
+                    <ul class="metismenu" id="menu">
+                        <li class="nav-label">Dashboard</li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                            </a>
+                            {% if not user.is_authenticated %}
+                            <ul aria-expanded="false">
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                            </ul>
+                            <ul aria-expanded="false">
+                                    <li><a href="{% url 'register' %}">Register</a></li>
+                            </ul>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <ul aria-expanded="false">
+                                <li><a href="{% url 'view_profile' %}">Profile</a></li>
+                            </ul>
+                            <ul aria-expanded="false">
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                            {% if user.userprofile.designation != 'team lead' %}
+                            <ul aria-expanded="false">
+                                    <li><a href="{% url 'reg_task' %}">Tasks</a></li>
+                            </ul>
+                            {% endif %}
+                            {% if user.userprofile.designation != 'team lead' %}
+                            <ul aria-expanded="false">
+                                    <li><a href="{% url 'cases' %}">Cases</a></li>
+                            </ul>
+                            {% endif %}
+                            {% endif %}
+                        </li>
+
+                    </ul>
+                </div>
+        </div>
+            <!--**********************************
+                Sidebar end
+            ***********************************-->
+
+        {% block body %}
+        {% endblock %}
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+
+    <script src="{% static 'account/plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'account/js/custom.min.js' %}"></script>
+    <script src="{% static 'account/js/settings.js' %}"></script>
+    <script src="{% static 'account/js/gleek.js' %}"></script>
+    <script src="{% static 'account/js/styleSwitcher.js' %}"></script>
+    <script src="{% static 'account/js/dashboard/dashboard-1.js' %}"></script>
+    <script src="{% static 'account/plugins/moment/moment.js' %}"></script>
+    <script src="{% static 'account/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="{% static 'account/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'account/js/plugins-init/form-pickers-init.js' %}"></script>
+    <script src="{% static 'account/plugins/summernote/dist/summernote.min.js' %}"></script>
+    <script src="{% static 'account/plugins/summernote/dist/summernote-init.js' %}"></script>
+    <script src="{% static 'account/plugins/tables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'account/plugins/tables/js/datatable/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'account/plugins/tables/js/datatable-init/datatable-basic.min.js' %}"></script>
+
+    </body>
+</html>

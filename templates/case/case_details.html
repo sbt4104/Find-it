@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>Case Details</title>
+{% endblock%}
+{% block body %}
+<div class="content-body">
+<div class="container-fluid">
+        <!-- row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 align="right"><a href = "{% url 'cases' %}">Go back</a></h3>
+                        {% if user.userprofile.designation == 'investigation head' %}
+                        <h4 align="left">Update Case Status:</h4>
+                        <div class="col-lg-4">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    {% for field in form %}
+                                        {{ field }}
+                                    {% endfor %}
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary"  type="submit">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        {% else %}
+                        <h4 align="left">Case Status: {{ case.status }}</h4>
+                        {% endif %}
+                        <h1 style="color:blueviolet"><center><u>{{ case.case_number }}</u></center></h1>
+                        <div class="bootstrap-media">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="mt-0">Deadline: {{ case.deadline }}<br><br>Case Info:<br></h5>{{ case.case_info }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%  if reports %}
+                    {% for report in reports %}
+                <div class="card">
+                    <div class="card-title" style="padding-left: 20px; padding-top: 20px">{{ report.report_user }}</div>
+                        <div class="card-body">
+
+                                {{ report.report }}
+
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="card">
+                        <div class="card-body">
+                            <form method ="POST" class="form-profile">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ report_form }}
+                                </div>
+                                <button class="btn btn-primary px-3 ml-4" type="submit">Post</button>
+                            </form>
+                        </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

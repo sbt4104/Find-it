@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Login</title>
+
+{% endblock %}
+
+{% block body %}
+
+    <!--*******************
+        Preloader start
+    ********************
+    <div id="preloader">
+            <div class="loader">
+                <svg class="circular" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+                </svg>
+            </div>
+        </div>
+        *******************
+            Preloader end
+        ********************-->
+
+        <div class="login-form-bg h-100" style="padding-top: 120px;">
+            <div class="container h-100">
+                <div class="row justify-content-center h-100">
+                    <div class="col-xl-4">
+                        <div class="form-input-content">
+                            <div class="card login-form mb-0">
+                                <div class="card-body pt-5">
+                                    <h3 class="text-center" >Login</h3>
+
+                                    <form class="mt-5 mb-5 login-input" method="POST">
+                                        {% csrf_token %}
+                                        {% for field in form %}
+                                            <div class="form-group">
+                                                <b>{{ field.label_tag }}</b>
+                                                    {{ field }}
+                                            </div>
+                                        {% endfor %}
+                                        <button class="btn login-form__btn submit w-100">LogIn</button>
+                                    </form>
+                                    <p class="mt-5 login-form__footer">Dont have account? <a href="../register" class="text-primary">Sign Up</a> now</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

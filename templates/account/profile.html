@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Profile</title>
+{% endblock %}
+
+{% block body %}
+<div class="content-body">
+
+        <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media align-items-center mb-4">
+                                    <div class="media-body">
+                                        <h3 class="mb-0">{{ user.username }}</h3>
+                                        <p class="text-muted mb-0">{{ user.userprofile.city }}</p>
+                                    </div>
+                                </div>
+                                {% if user.userprofile.designation != 'team lead' %}
+                                <div class="row mb-5">
+                                    <div class="col">
+                                        <div class="card card-profile text-center">
+                                            <span class="mb-1 text-primary"><i class="icon-people"></i></span>
+                                            <h3 class="mb-0">{{ ongoing_cases }}</h3>
+                                            <p class="text-muted px-4">Ongoing cases</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card card-profile text-center">
+                                            <span class="mb-1 text-warning"><i class="icon-user-follow"></i></span>
+                                            <h3 class="mb-0">{{ completed_cases }}</h3>
+                                            <p class="text-muted">Completed cases</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <h4>About Me</h4>
+                                <p class="text-muted">Hi, I'm Pikamy, has been the industry standard dummy text ever since the 1500s.</p>
+                                <ul class="card-profile__info">
+                                    <li class="mb-1"><strong class="text-dark mr-4">Name</strong> <span>{{ user.first_name }} {{ user.last_name }}</span></li>
+                                    <li><strong class="text-dark mr-4">Email</strong> <span>{{ user.email }}</span></li>
+                                    <li><strong class="text-dark mr-4">Designation</strong> <span>{{ user.userprofile.designation }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% if user.userprofile.designation == 'team lead' %}
+                    <div class="col-lg-8 col-xl-9">
+                        <div class="card"><br>
+                            <center><div class="card-title">Register New Case</div></center>
+                            <div class="card-body">
+                                    <form class="mt-5 mb-5 login-input" method="POST">
+                                            {% csrf_token %}
+                                            {% for field in form %}
+                                                <div class="form-group">
+                                                    <b>{{ field.label_tag }}</b>
+                                                    {{ field }}
+                                                </div>
+                                            {% endfor %}
+                                            <button class="btn login-form__btn submit w-100">Register New Case</button>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if user.userprofile.designation == 'investigation head' %}
+
+                    <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title"><center><h2 style="color:#0e4cfd"><u>New Assigned Cases</u></h2></center></div><br>
+                                    {% if new_cases %}
+                                    {% for case in new_cases %}
+                                    <div class="text-center">
+                                        <h2 class="mt-3">{{ case.case_numbers }}</h2>
+                                        <p>Add deadline and info</p><a href="{% url 'add_info'  pk=case.pk %}" class="btn gradient-4 btn-lg border-0 btn-rounded px-5">Add
+                                            info</a>
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <div class="text-center">
+                                        <h3 class="mt-3">No new cases</h3>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div>
+
+                    {% endif %}
+                    {% if user.userprofile.designation == 'member' %}
+
+                    <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title"><center><h2 style="color:#0e4cfd"><u>New Assigned Tasks</u></h2></center></div><br>
+                                    {% if ongoing_task %}
+                                    {% for case in ongoing_task %}
+                                    <div class="text-center">
+                                        <h2 class="mt-3">{{ case.case_number }}</h2>
+                                        <p>Case number</p><a href="{% url 'add_info'  pk=case.pk %}" class="btn gradient-4 btn-lg border-0 btn-rounded px-5">Add
+                                            info</a>
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <div class="text-center">
+                                        <h3 class="mt-3">No new cases</h3>
+                                    </div>
+                                    {% endif %}
+
+
+
+                                    <div class="table-responsive">
+                                      {% if mp_codes %}
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                            <thead>
+                                                <tr>
+                                                    <th>keys</th>
+                                                    <th>values</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for key,val in mp_codes.items %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td>{{ val }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {% else %}
+                                    <div class="text-center">
+                                        <h3 class="mt-3">No new textfiles</h3>
+                                    </div>
+                                    {% endif %}
+
+
+
+
+
+
+
+                                    <div class="table-responsive">
+                                      {% if mp_tags %}
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                            <thead>
+                                                <tr>
+                                                    <th>keys</th>
+                                                    <th>values</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for key,val in mp_tags.items %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td>{{ val }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {% else %}
+                                    <div class="text-center">
+                                        <h3 class="mt-3">No new textfiles</h3>
+                                    </div>
+                                    {% endif %}
+
+
+                                    <div class="table-responsive">
+                                      {% if mp_main %}
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                            <thead>
+                                                <tr>
+                                                    <th>keys</th>
+                                                    <th>probabilities</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for key,val in mp_main.items %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td>{{ val }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {% else %}
+                                    <div class="text-center">
+                                        <h3 class="mt-3">No new textfiles</h3>
+                                    </div>
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-8">
+                    <form class=""   method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <button type="submit" class="save btn btn-default">Press to calculate</button>
+                    </form>
+                  </div>
+
+                    {% endif %}
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+</div>
+{% endblock %}

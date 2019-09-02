@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Your Cases</title>
+{% endblock %}
+{% block body %}
+<div class="content-body">
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Your Cases</h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered zero-configuration">
+                                <thead>
+                                    <tr>
+                                        <th>Case Name</th>
+                                        <th>Deadline</th>
+                                        <th>Investigation Head</th>
+                                        <th>View/Update Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for case in cases %}
+                                    <tr>
+                                        <td>{{ case.case_number }}</td>
+                                        <td>{{ case.deadline }}</td>
+                                        <td>{{ case.investigation_head }}</td>
+                                        <td style="color:indigo"><a href = "{% url 'case_details' pk=case.pk %}">Click here</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
